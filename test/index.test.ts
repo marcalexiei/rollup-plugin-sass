@@ -960,6 +960,9 @@ const createApiOptionTestCaseTitle: TitleFn<[RollupPluginSassOptions]> = (
         'should contain expected number of "watched" files',
       );
 
+      console.info('bundle.watchFiles[0]', bundle.watchFiles[0]);
+      console.info('inputFilePath', inputFilePath);
+
       // Ensure our initial 'index.js' module is being watched
       t.true(
         bundle.watchFiles[0].endsWith(inputFilePath),
@@ -967,6 +970,9 @@ const createApiOptionTestCaseTitle: TitleFn<[RollupPluginSassOptions]> = (
       );
 
       // Ensure 'index.js' module, and other files in dep tree are watched
+      console.info('expectedWatchedFiles', expectedWatchedFiles);
+      console.info('bundle.watchFiles', bundle.watchFiles);
+
       expectedWatchedFiles.forEach((filePath) => {
         t.true(
           bundle.watchFiles.some((it) => it.endsWith(filePath)),
