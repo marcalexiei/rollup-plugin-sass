@@ -925,7 +925,12 @@ const createApiOptionTestCaseTitle: TitleFn<[RollupPluginSassOptions]> = (
 
   const macro = test.macro<[RollupPluginSassOptions]>({
     async exec(t, pluginOptions) {
-      const inputFilePath = 'test/fixtures/dependencies/index.js';
+      const normalizePathForAllOS = (input: string): string =>
+        path.join(...input.split('/'));
+
+      const inputFilePath = normalizePathForAllOS(
+        'test/fixtures/dependencies/index.js',
+      );
 
       // Bundle our dependencies fixture module
       // ----
@@ -948,7 +953,9 @@ const createApiOptionTestCaseTitle: TitleFn<[RollupPluginSassOptions]> = (
       const expectedWatchedFiles = [
         'test/fixtures/dependencies/index.js',
         ...nestedFilePaths,
-      ];
+      ].map(normalizePathForAllOS);
+
+      console.info('expectedWatchedFiles', expectedWatchedFiles);
 
       // Run tests
       // ----
